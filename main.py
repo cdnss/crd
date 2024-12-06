@@ -19,12 +19,12 @@ def crot(all):
    options.add_argument("--headless")
    options.add_experimental_option("excludeSwitches", ["enable-automation"])
    options.add_experimental_option('useAutomationExtension', False)
-   options.add_arguments("start-maximized")
-   options.add_arguments("disable-infobars")
-   options.add_arguments("--disable-extensions")
-   options.add_arguments("--disable-gpu")
-   options.add_arguments("--disable-dev-shm-usage")
-   options.add_arguments("--no-sandbox")
+   options.add_argument("start-maximized")
+   options.add_argument("disable-infobars")
+   options.add_argument("--disable-extensions")
+   options.add_argument("--disable-gpu")
+   options.add_argument("--disable-dev-shm-usage")
+   options.add_argument("--no-sandbox")
    driver = webdriver.Chrome(options=options)
 
 
