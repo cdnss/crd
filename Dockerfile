@@ -38,7 +38,7 @@ WORKDIR /app
 
 # Copy your Python script to the working directory
 COPY main.py .
-COPY requirements.txt
+COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
