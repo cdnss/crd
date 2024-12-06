@@ -19,7 +19,7 @@ def crot(all):
    options.add_argument("--headless")
    options.add_experimental_option("excludeSwitches", ["enable-automation"])
    options.add_experimental_option('useAutomationExtension', False)
-   options.add_rguments("start-maximized")
+   options.add_arguments("start-maximized")
    options.add_arguments("disable-infobars")
    options.add_arguments("--disable-extensions")
    options.add_arguments("--disable-gpu")
