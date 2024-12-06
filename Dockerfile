@@ -32,13 +32,15 @@ RUN apt-get install -y \
 RUN apt-get install -y chromium chromium-driver
 
 # Install Selenium Python library
-RUN pip install -r requirements.txt
 
 # Set the working directory
 WORKDIR /app
 
 # Copy your Python script to the working directory
 COPY main.py .
+COPY requirements.txt
+
+RUN pip install -r requirements.txt
 
 # Expose the port if needed (adjust as required)
 EXPOSE 5000
