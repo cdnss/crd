@@ -1,30 +1,47 @@
-# Use a base image with the necessary dependencies (e.g., Debian or Ubuntu)
-FROM debian:latest
+# Use a lightweight Python base image
+FROM python:3.11-slim-buster
+
+# Set environment variable for non-interactive mode
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Update the package lists
 RUN apt-get update -y
 
-# Install required packages (e.g., wget for downloading)
-RUN apt-get install -y wget
+# Install required system dependencies
+RUN apt-get install -y \
+    fonts-liberation \
+    libnss3 \
+    libx11-6 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libatspi2.0-0 \
+    libgtk-3-0 \
+    libgtk-3-common \
+    libxcomposite1 \
+    libxcursor1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgbm-dev \
+    libxss1 \
+    libfontconfig1 \
+    libxtst6 \
+    xauth \
+    xvfb
 
-# Download the latest ChromeDriver version (replace with the correct URL)
-ENV CHROMEDRIVER_VERSION 119.0.6446.69
-RUN wget https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+# Install Chromium and ChromeDriver
+RUN apt-get install -y chromium chromium-driver
 
-# Extract ChromeDriver
-RUN unzip chromedriver_linux64.zip
-
-# Move ChromeDriver to the `/usr/local/bin` directory for easy access
-RUN mv chromedriver /usr/local/bin/
-
-# Set permissions for ChromeDriver
-RUN chmod +x /usr/local/bin/chromedriver
-
-# Add your application code and dependencies here
-# ...
+# Install Selenium Python library
 RUN pip install -r requirements.txt
-# Expose the port your application will listen on (if necessary)
+
+# Set the working directory
+WORKDIR /app
+
+# Copy your Python script to the working directory
+COPY main.py .
+
+# Expose the port if needed (adjust as required)
 EXPOSE 5000
 
-# Define the command to run your application
+# Command to run the script
 CMD ["python", "main.py"]
