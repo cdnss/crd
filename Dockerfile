@@ -46,4 +46,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Command to run the script
-CMD ["python", "main.py"]
+CMD ["xvfb-run python", "main.py"]
