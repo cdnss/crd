@@ -1,4 +1,4 @@
-selenium
+seleniumbase
 selenium-stealth
 flask
 requests
