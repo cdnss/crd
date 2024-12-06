@@ -113,12 +113,7 @@ def crot(all):
      dd.decompose()
 
    div = soup
-   """
-   if soup.find_all("div", {"id": "anu"}):
-     div = soup.find_all("div", {"id": "anu"})
-   else:
-     div = "hmm"
-   """
+   
    driver.close()
    return str( div )
 @app.route("/")
