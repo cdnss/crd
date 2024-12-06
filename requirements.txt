@@ -1,0 +1,5 @@
+selenium
+selenium-stealth
+flask
+requests
+bs4
