@@ -1,3 +1,59 @@
+from bs4 import BeautifulSoup
+from flask import *
+import os
+app = Flask(__name__)
+ports = os.getenv("PORT", 8080 )
+
+
+# pip3 install seleniumbase
+from seleniumbase import Driver
+
+target = "https://doujindesu.tv"
+
+def get(url):
+# initialize the driver in GUI mode with UC enabled
+  driver = Driver(uc=True, headless=False)
+
+# set the target URL
+
+# open URL using UC mode with 6 second reconnect time to bypass initial detection
+  driver.uc_open_with_reconnect(url, reconnect_time=1)
+
+# attempt to click the CAPTCHA checkbox if present
+  driver.uc_gui_click_captcha()
+  soup = BeautifulSoup(driver.page_source, "html.parser")
+
+  for dd in soup.select("script:-soup-contains('mydomain')"):
+    dd.decompose()
+  return str(soup)
+# take a screenshot of the current page and save it
+  driver.quit()
+
+
+@app.route("/")
+def hello():
+    return get(target)
+
+@app.route("/<path:all>" , strict_slashes=False, methods=['POST', 'GET'])
+def post(all):
+    url2 = request.full_path
+
+    return get(target+url2)
+
+
+
+
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=ports, debug=True)
+
+
+
+
+
+"""
+
 from selenium import webdriver
 from selenium_stealth import stealth
 from bs4 import BeautifulSoup
@@ -78,3 +134,4 @@ def ull(all):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=ports, debug=True)
+"""
