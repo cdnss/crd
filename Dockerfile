@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Install Chromium dan ChromeDriver (sesuaikan versi)
 RUN apt-get update && \
-    apt-get install -y chromium=114.0.5735.90 chromium-driver=114.0.5735.90
+    apt-get install -y chromium chromium-driver
 
 # Copy aplikasi
 COPY . .
