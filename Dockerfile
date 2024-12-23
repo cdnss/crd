@@ -1,22 +1,18 @@
-# Gunakan base image yang lebih kecil (misalnya, Python slim-buster)
-FROM python:3.11-slim-buster
-
-# Set working directory
+FROM python:19-alpine
+RUN apk add --no-cache \
+      chromium \
+      nss \
+      freetype \
+      freetype-dev \
+      harfbuzz \
+      ca-certificates \
+      ttf-freefont 
+      
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium-browser
 WORKDIR /app
-
-# Install dependencies
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Install Chromium dan ChromeDriver (sesuaikan versi)
-RUN apt-get update && \
-    apt-get install -y chromium chromium-driver
-
-# Copy aplikasi
+RUN pip install -r requirements.txt
 COPY . .
-
-# Expose port (jika diperlukan)
 EXPOSE 5000
-
-# Command untuk menjalankan aplikasi
-CMD ["python", "main.py"]
+CMD [ "python", "main.py" ]
