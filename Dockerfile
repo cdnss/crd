@@ -8,6 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Install chromium, fonts, and dependencies
 RUN apt-get update && \
+    apt-get upgrade \
     apt-get install -y --no-install-recommends \
         fonts-liberation \
         libxss1 \
