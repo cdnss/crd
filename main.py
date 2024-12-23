@@ -17,6 +17,7 @@ target = "https://doujindesu.tv"
 def crot(all):
    options = webdriver.ChromeOptions()
    options.add_argument("--headless")
+   options.add_argument( "--remote-debugging-pipe" )
    options.add_experimental_option("excludeSwitches", ["enable-automation"])
    options.add_experimental_option('useAutomationExtension', False)
 
@@ -36,7 +37,7 @@ def crot(all):
 
    driver.get(all)
    
-   wait = WebDriverWait(driver, 10)
+   wait = WebDriverWait(driver, 100)
 
 # Wait for the document to be fully loaded
    wait.until(lambda driver: driver.execute_script("return document.readyState;") == "complete")
