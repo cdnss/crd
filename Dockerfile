@@ -1,36 +1,50 @@
-FROM python:3.9-slim-buster
+# Use a lightweight Python base image
+FROM python:3.11-slim-buster
 
+# Set environment variable for non-interactive mode
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update the package lists
+RUN apt-get update -y
+
+# Install required system dependencies
+RUN apt-get install -y \
+    fonts-liberation \
+    libnss3 \
+    libx11-6 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libatspi2.0-0 \
+    libgtk-3-0 \
+    libgtk-3-common \
+    libxcomposite1 \
+    libxcursor1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgbm-dev \
+    libxss1 \
+    libfontconfig1 \
+    libxtst6 \
+    xauth \
+    xvfb
+
+# Install Chromium and ChromeDriver
+RUN apt-get install -y chromium chromium-driver
+
+# Install Selenium Python library
+
+# Set the working directory
 WORKDIR /app
 
-COPY requirements.txt ./
+# Copy your Python script to the working directory
+COPY main.py .
+COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
-# Install chromium, fonts, and dependencies
-RUN apt-get update && \
-    apt-get upgrade \
-    apt-get install -y --no-install-recommends \
-        fonts-liberation \
-        libxss1 \
-        libglib2.0-0 \
-        libgtk-3-0 \
-        libgtk-3-dev \
-        libatk1.0-0 \
-        libatk-1.0-dev \
-        libcairo2-dev \
-        python3-dev \
-        libxrender1 \
-        libx11-6 \
-        libxcursor-dev \
-        xauth \
-        && rm -rf /var/lib/apt/lists/*
+# Expose the port if needed (adjust as required)
+EXPOSE 5000
 
-# Install chromium
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && sudo dpkg -i google-chrome-stable_current_amd64.deb \
-    && rm google-chrome-stable_current_amd64.deb
+# Command to run the script
 
-# Copy your application code
-COPY . .
-
-CMD ["python", "main.py"]
+CMD ["xvfb-run", "-a", "-s", "-screen 0 1280x1024x24", "python", "main.py"]
