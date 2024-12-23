@@ -16,7 +16,7 @@ RUN apt-get update && \
 COPY . .
 
 # Expose port (jika diperlukan)
-EXPOSE 8080
+EXPOSE 5000
 
 # Command untuk menjalankan aplikasi
 CMD ["xvfb-run", "-a", "-s", "-screen 0 1280x1024x24", "python", "main.py"]
