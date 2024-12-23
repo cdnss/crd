@@ -19,4 +19,4 @@ COPY . .
 EXPOSE 5000
 
 # Command untuk menjalankan aplikasi
-CMD ["xvfb-run", "-a", "-s", "-screen 0 1280x1024x24", "python", "main.py"]
+CMD ["python", "main.py"]
