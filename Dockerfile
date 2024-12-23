@@ -1,50 +1,22 @@
-# Use a lightweight Python base image
+# Gunakan base image yang lebih kecil (misalnya, Python slim-buster)
 FROM python:3.11-slim-buster
 
-# Set environment variable for non-interactive mode
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Update the package lists
-RUN apt-get update -y
-
-# Install required system dependencies
-RUN apt-get install -y \
-    fonts-liberation \
-    libnss3 \
-    libx11-6 \
-    libatk-bridge2.0-0 \
-    libatk1.0-0 \
-    libatspi2.0-0 \
-    libgtk-3-0 \
-    libgtk-3-common \
-    libxcomposite1 \
-    libxcursor1 \
-    libxdamage1 \
-    libxrandr2 \
-    libgbm-dev \
-    libxss1 \
-    libfontconfig1 \
-    libxtst6 \
-    xauth \
-    xvfb
-
-# Install Chromium and ChromeDriver
-RUN apt-get install -y chromium chromium-driver
-
-# Install Selenium Python library
-
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy your Python script to the working directory
-COPY main.py .
-COPY requirements.txt .
+# Install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install -r requirements.txt
+# Install Chromium dan ChromeDriver (sesuaikan versi)
+RUN apt-get update && \
+    apt-get install -y chromium=114.0.5735.90 chromium-driver=114.0.5735.90
 
-# Expose the port if needed (adjust as required)
-EXPOSE 5000
+# Copy aplikasi
+COPY . .
 
-# Command to run the script
+# Expose port (jika diperlukan)
+EXPOSE 8080
 
+# Command untuk menjalankan aplikasi
 CMD ["xvfb-run", "-a", "-s", "-screen 0 1280x1024x24", "python", "main.py"]
