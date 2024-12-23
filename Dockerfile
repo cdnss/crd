@@ -47,4 +47,4 @@ EXPOSE 5000
 
 # Command to run the script
 
-CMD ["xvfb-run", "-a", "-s", "-screen 0 1280x1024x24", "python", "main.py"]
+CMD ["python", "main.py"]
