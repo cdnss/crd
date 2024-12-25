@@ -1,5 +1,5 @@
 FROM dorowu/ubuntu-desktop-lxde-vnc
 
-EXPOSE 5000
+EXPOSE 80
 
 CMD ["/bin/bash"]
