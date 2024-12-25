@@ -1,18 +1,21 @@
-FROM python:3.9-alpine
-RUN apk add --no-cache \
-      chromium \
-      nss \
-      freetype \
-      freetype-dev \
-      harfbuzz \
-      ca-certificates \
-      ttf-freefont 
-      
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium-browser
+FROM python:3.9-slim-buster
+
+# Set working directory
 WORKDIR /app
-COPY requirements.txt ./
+
+# Copy requirements.txt
+COPY requirements.txt requirements.txt
+
+# Install dependencies
 RUN pip install -r requirements.txt
+
+# Copy the rest of the application code
 COPY . .
+
+# Install Chrome driver (sesuaikan dengan versi Chrome yang kamu gunakan)
+RUN apt-get update && apt-get install wget -y && wget https://raw.githubusercontent.com/wahasa/Debian/main/chromiumfix.sh && chmod +x chromiumfix.sh && ./chromiumfix.sh
+# Expose port (jika aplikasi kamu menggunakan port tertentu)
 EXPOSE 5000
-CMD [ "python", "main.py" ]
+
+# Command untuk menjalankan aplikasi
+CMD ["python", "main.py"]
