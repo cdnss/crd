@@ -22,7 +22,7 @@ def crot(all):
    options.add_argument( "--remote-debugging-pipe" )
    options.add_experimental_option("excludeSwitches", ["enable-automation"])
    options.add_experimental_option('useAutomationExtension', False)
-
+   options.add_argument("--disable-dev-shm-usage")
    driver = webdriver.Chrome(options=options)
 
 
